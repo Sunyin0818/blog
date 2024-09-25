@@ -1,11 +1,11 @@
 ---
 tags:
-  - 工具安装激活
+  - 工具折腾
   - windows
   - publish
 title: windows & office安装激活
 date: 2024-08-27T07:05:56.073Z
-lastmod: 2024-09-24T08:51:17.035Z
+lastmod: 2024-09-24T09:20:37.408Z
 ---
 # 1. windows
 
