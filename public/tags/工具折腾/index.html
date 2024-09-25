@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Tags | Sunyin&#39;s Blog</title>
+<title>工具折腾 | Sunyin&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="Sunyin">
-<link rel="canonical" href="http://localhost:1313/tags/">
+<link rel="canonical" href="http://localhost:1313/tags/%E5%B7%A5%E5%85%B7%E6%8A%98%E8%85%BE/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.af426310e146b199cc19c33acd2cd52502983e6f8cd40d5af80a041bf9ad8ee0.css" integrity="sha256-r0JjEOFGsZnMGcM6zSzVJQKYPm&#43;M1A1a&#43;AoEG/mtjuA=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
@@ -18,8 +18,8 @@
 <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/index.xml">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/tags/">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/%E5%B7%A5%E5%85%B7%E6%8A%98%E8%85%BE/index.xml">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/tags/%E5%B7%A5%E5%85%B7%E6%8A%98%E8%85%BE/">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,13 +56,13 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Tags" />
+</noscript><meta property="og:title" content="工具折腾" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://localhost:1313/tags/" />
+<meta property="og:url" content="http://localhost:1313/tags/%E5%B7%A5%E5%85%B7%E6%8A%98%E8%85%BE/" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tags"/>
+<meta name="twitter:title" content="工具折腾"/>
 <meta name="twitter:description" content=""/>
 
 </head>
@@ -110,22 +110,52 @@
         </ul>
     </nav>
 </header>
-<main class="main">
-<header class="page-header">
-    <h1>Tags</h1>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="http://localhost:1313/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/tags/">Tags</a></div>
+  <h1>
+    工具折腾
+  </h1>
 </header>
 
-<ul class="terms-tags">
-    <li>
-        <a href="http://localhost:1313/tags/publish/">publish <sup><strong><sup>2</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="http://localhost:1313/tags/windows/">windows <sup><strong><sup>2</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="http://localhost:1313/tags/%E5%B7%A5%E5%85%B7%E6%8A%98%E8%85%BE/">工具折腾 <sup><strong><sup>2</sup></strong></sup> </a>
-    </li>
-</ul>
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Scoop
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>1. 安装 1.1. 设置环境变量 将Scoop安装到自定义目录
+1 2 $env:SCOOP=&#39;C:\Scoop&#39; [Environment]::SetEnvironmentVariable(&#39;SCOOP&#39;, $env:SCOOP, &#39;User&#39;) 将Scoop配置为将全局程序安装到自定义目录
+1 2 $env:SCOOP_GLOBAL=&#39;C:\Scoop\GlobalApps&#39; [Environment]::SetEnvironmentVariable(&#39;SCOOP_GLOBAL&#39;, $env:SCOOP_GLOBAL, &#39;Machine&#39;) 1.2. 开始安装 在 PowerShell 中输入下面内容，保证允许本地脚本的执行
+1 set-executionpolicy remotesigned -scope currentuser 然后执行下面的命令安装 Scoop
+1 2 3 Invoke-Expression (New-Object System.Net.WebClient).DownloadString(&#39;https://get.scoop.sh&#39;) # 或 iwr -useb get.scoop.sh | iex 静待脚本执行完成就可以了，安装成功
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-08-27 07:06:18.3 +0000 UTC'>八月 27, 2024</span>&nbsp;·&nbsp;Sunyin</footer>
+  <a class="entry-link" aria-label="post link to Scoop" href="http://localhost:1313/posts/03-resource/scoop/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">windows &amp; office安装激活
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>1. windows 镜像下载 激活工具 2. office 2.1. 资源包准备 需要下载三个东西：
+office离线镜像
+我这里选择的是ProPlus的离线包，下载得到O365ProPlusRetail.img
+office部署工具
+微软官方提供的工具，用于自定义安装路径和组件数量
+激活脚本
+大佬编写的一键脚本
+2.2. 安装 2.2.1. 装载镜像 装载离线镜像O365ProPlusRetail.img，如果无需自定义安装组件，可以直接安装
+2.2.2. 自定义安装组件 部署工具的使用文档
+安装office部署工具后，可以得到如下的文件：
+1 2 3 4 5 -a--- 2023/10/19 23:05 1164 configuration-Office2019Enterprise.xml -a--- 2023/10/19 23:05 1368 configuration-Office2021Enterprise.xml -a--- 2023/10/19 23:05 1014 configuration-Office365-x64.xml -a--- 2023/10/19 23:05 1014 configuration-Office365-x86.xml -a--- 2023/10/19 23:05 7615656 setup.exe 我们使用configuration-Office365-x64.xml作为模板，复制一个重命名为configuration-Office365-x64 - custom.xml
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-08-27 07:05:56.073 +0000 UTC'>八月 27, 2024</span>&nbsp;·&nbsp;Sunyin</footer>
+  <a class="entry-link" aria-label="post link to windows & office安装激活" href="http://localhost:1313/posts/03-resource/windows--office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/"></a>
+</article>
     </main>
     
 <footer class="footer">

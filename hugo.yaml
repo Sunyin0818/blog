@@ -1,4 +1,42 @@
 baseURL: https://blog.sunyin.fun/
-languageCode: en-us
+languageCode: zh
 title: Sunyin's Blog
 theme: ["PaperMod"]
+
+enableInlineShortcodes: true #允许内联短码
+enableEmoji: true # 允许使用 Emoji 表情，建议 true
+enableRobotsTXT: true # 允许爬虫抓取到搜索引擎，建议 true
+defaultContentLanguage: zh # 最顶部首先展示的语言页面
+defaultContentLanguageInSubdir: false
+
+paginate: 15 # 首页每页显示的文章数
+
+params:
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  author: Sunyin
+  defaultTheme: auto # defaultTheme: light or  dark
+  ShowCodeCopyButtons: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowToc: true # 显示目录
+  TocOpen: true # 自动展开目录
+  VisitCount: true
+  
+  homeInfoParams:
+    title: 记录
+    content: 天高云阔，风语如歌
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/Sunyin0818"
+markup:
+  goldmark:
+    renderer:
+      unsafe: true # HUGO 默认转义 Markdown 文件中的 HTML 代码，如需开启的话
+  highlight:
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    style: monokai
+    tabWidth: 4
