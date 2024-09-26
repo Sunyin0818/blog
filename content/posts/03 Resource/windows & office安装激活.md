@@ -2,15 +2,13 @@
 tags:
   - 工具折腾
   - windows
-  - publish
-title: windows & office安装激活
-date: 2024-08-27T07:05:56.073Z
-lastmod: 2024-09-24T09:20:37.408Z
+publish: "true"
 ---
 # 1. windows
 
-* [镜像下载](https://hellowindows.cn/)
-* [激活工具](https://cmwtat.cloudmoe.com/cn.html)
++ [镜像下载](https://hellowindows.cn/)
++ [激活工具](https://cmwtat.cloudmoe.com/cn.html)
+
 
 # 2. office
 
@@ -18,19 +16,25 @@ lastmod: 2024-09-24T09:20:37.408Z
 
 需要下载三个东西：
 
-* [office离线镜像](https://massgrave.dev/office_c2r_links.html)
+- [office离线镜像](https://massgrave.dev/office_c2r_links.html)
 
   我这里选择的是ProPlus的离线包，下载得到`O365ProPlusRetail.img`
 
-  ![](/images/03%20Resource/windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/ad0ac37064292740d0959f79aeda01d8_MD5.png)
+![](_Assets/ad0ac37064292740d0959f79aeda01d8_MD5.png)
 
-* [office部署工具](https://www.microsoft.com/en-us/download/details.aspx?id=49117)
+  
+
+- [office部署工具](https://www.microsoft.com/en-us/download/details.aspx?id=49117)
 
   微软官方提供的工具，用于自定义安装路径和组件数量
 
-* [激活脚本](https://github.com/massgravel/Microsoft-Activation-Scripts/archive/refs/heads/master.zip)
+  
+
+- [激活脚本](https://github.com/massgravel/Microsoft-Activation-Scripts/archive/refs/heads/master.zip)
 
   大佬编写的一键脚本
+
+
 
 ## 2.2. 安装
 
@@ -83,10 +87,10 @@ lastmod: 2024-09-24T09:20:37.408Z
 </Configuration>
 ```
 
-* `SourcePath`：镜像装载的盘符
-* `ExcludeApp`：可选如下，可查阅微软文档，这里我只保留了三件套
+- `SourcePath`：镜像装载的盘符
+- `ExcludeApp`：可选如下，可查阅微软文档，这里我只保留了三件套
 
-![](/images/03%20Resource/windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/46689e7e5f87f9d3af95ec2e81a5d635_MD5.png)
+![](_Assets/46689e7e5f87f9d3af95ec2e81a5d635_MD5.png)
 
 执行安装命令
 
@@ -96,7 +100,9 @@ lastmod: 2024-09-24T09:20:37.408Z
 
 效果如下图，只安装了三件套
 
-![](/images/03%20Resource/windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/3f76cbba47c5b23e1074f7ee7f9f4e96_MD5.png)
+![](_Assets/3f76cbba47c5b23e1074f7ee7f9f4e96_MD5.png)
+
+
 
 ## 2.3. 激活
 
@@ -104,11 +110,11 @@ lastmod: 2024-09-24T09:20:37.408Z
 
 我们选择[2.5. Ohook](#2.5.%20Ohook)的方式激活，按`2`
 
-![](/images/03%20Resource/windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/5261e2978a3415c8c415d6b527ed533c_MD5.png)
+![](_Assets/5261e2978a3415c8c415d6b527ed533c_MD5.png)
 
 然后按`1`，开始激活
 
-![](/images/03%20Resource/windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/9dcc693246e28f965d57b014a91aa705_MD5.png)
+![](_Assets/9dcc693246e28f965d57b014a91aa705_MD5.png)
 
 ## 2.4. 卸载
 
