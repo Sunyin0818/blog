@@ -15,13 +15,15 @@ params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   author: Sunyin
   defaultTheme: auto # defaultTheme: light or  dark
+  DateFormat: "2006-01-02"  # 日期格式化
   ShowCodeCopyButtons: true
   displayFullLangName: true
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
+  VisitCount: true
+
   ShowToc: true # 显示目录
   TocOpen: true # 自动展开目录
-  VisitCount: true
   
   homeInfoParams:
     title: 记录
