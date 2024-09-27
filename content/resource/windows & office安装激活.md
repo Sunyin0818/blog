@@ -5,9 +5,9 @@ category:
 tags:
   - 工具折腾
   - windows
-date: 2024-08-27 15:05
-lastmod: 2024-09-27 15:33
 publish: true
+date: 2024-08-27 15:05
+lastmod: 2024-09-27 15:44
 ---
 # 1. windows
 
