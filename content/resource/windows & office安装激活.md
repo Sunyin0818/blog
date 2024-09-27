@@ -1,8 +1,13 @@
 ---
+title: windows & office安装激活
+category:
+  - resource
 tags:
   - 工具折腾
   - windows
-share: "true"
+date: 2024-08-27 15:05
+lastmod: 2024-09-27 15:33
+publish: true
 ---
 # 1. windows
 
@@ -20,7 +25,7 @@ share: "true"
 
   我这里选择的是ProPlus的离线包，下载得到`O365ProPlusRetail.img`
 
-  ![](windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/ad0ac37064292740d0959f79aeda01d8_MD5.png)
+![](/_assets/ad0ac37064292740d0959f79aeda01d8_MD5.png)
 
   
 
@@ -90,7 +95,7 @@ share: "true"
 - `SourcePath`：镜像装载的盘符
 - `ExcludeApp`：可选如下，可查阅微软文档，这里我只保留了三件套
 
-![](windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/46689e7e5f87f9d3af95ec2e81a5d635_MD5.png)
+![](/_assets/46689e7e5f87f9d3af95ec2e81a5d635_MD5.png)
 
 执行安装命令
 
@@ -100,7 +105,7 @@ share: "true"
 
 效果如下图，只安装了三件套
 
-![](windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/3f76cbba47c5b23e1074f7ee7f9f4e96_MD5.png)
+![](/_assets/3f76cbba47c5b23e1074f7ee7f9f4e96_MD5.png)
 
 
 
@@ -108,13 +113,13 @@ share: "true"
 
 解压下载的安装脚本`Microsoft-Activation-Scripts-master.zip`，直接双击运行`Microsoft-Activation-Scripts-master/MAS/All-In-One-Version/MAS_AIO.cmd`
 
-我们选择[2.5. Ohook](windows%2520&%2520office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.md##2.5.%2520Ohook)的方式激活，按`2`
+我们选择[2.5. Ohook](#2.5.%20Ohook)的方式激活，按`2`
 
-![](windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/5261e2978a3415c8c415d6b527ed533c_MD5.png)
+![](/_assets/5261e2978a3415c8c415d6b527ed533c_MD5.png)
 
 然后按`1`，开始激活
 
-![](windows%20&%20office%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB.assets/9dcc693246e28f965d57b014a91aa705_MD5.png)
+![](/_assets/9dcc693246e28f965d57b014a91aa705_MD5.png)
 
 ## 2.4. 卸载
 
