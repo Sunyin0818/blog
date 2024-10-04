@@ -34,10 +34,14 @@ params:
     # imageWidth: 120 # custom size
     # imageHeight: 120 # custom size
     buttons:
-      - name: Resource
-        url: "/resource"
-      - name: Area
+      # - name: Project
+      #   url: "/project"
+      - name: 关注
         url: "/area"
+      - name: 资源
+        url: "/resource"
+      # - name: Archive
+      #   url: "/archive"
   
   # homeInfoParams:
   #   title: 记录
