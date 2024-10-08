@@ -7,7 +7,7 @@ tags:
   - linux
 publish: true
 date: 2024-09-04 17:32:22
-lastmod: 2024-10-04 21:48:05
+lastmod: 2024-10-08 11:24:50
 ---
 # 1. 安装
 

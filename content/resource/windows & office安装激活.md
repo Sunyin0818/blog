@@ -7,7 +7,7 @@ tags:
   - windows
 publish: true
 date: 2024-08-27 15:05:56
-lastmod: 2024-09-27 17:07:04
+lastmod: 2024-10-08 11:41:39
 ---
 # 1. windows
 
@@ -19,35 +19,44 @@ lastmod: 2024-09-27 17:07:04
 
 ## 2.1. 资源包准备
 
-需要下载三个东西：
+### 2.1.1. office安装包
 
-- [office离线镜像](https://massgrave.dev/office_c2r_links.html)
+#### 2.1.1.1. （二选一）一键安装
+[Office Tool Plus](https://otp.landian.vip/)
+
+#### 2.1.1.2. （二选一）手动安装
+
++ [office离线镜像](https://massgrave.dev/office_c2r_links.html)
 
   我这里选择的是ProPlus的离线包，下载得到`O365ProPlusRetail.img`
 
-![](/_assets/ad0ac37064292740d0959f79aeda01d8_MD5.png)
+  ![](/_assets/ad0ac37064292740d0959f79aeda01d8_MD5.png)
 
-  
-
-- [office部署工具](https://www.microsoft.com/en-us/download/details.aspx?id=49117)
++ [office部署工具](https://www.microsoft.com/en-us/download/details.aspx?id=49117)
 
   微软官方提供的工具，用于自定义安装路径和组件数量
 
   
 
-- [激活脚本](https://github.com/massgravel/Microsoft-Activation-Scripts/archive/refs/heads/master.zip)
+### 2.1.2. 激活脚本 
 
-  大佬编写的一键脚本
+[Microsoft-Activation-Scripts](https://github.com/massgravel/Microsoft-Activation-Scripts)
+
+GitHub开源的百k star神器
+
+
+## 2.2. 一键安装
+
+使用`Office Tool Plus`很方便，按需选择即可
 
 
 
-## 2.2. 安装
-
-### 2.2.1. 装载镜像
+## 2.3. 手动安装
+### 2.3.1. 装载镜像
 
 装载离线镜像`O365ProPlusRetail.img`，如果无需自定义安装组件，可以直接安装
 
-### 2.2.2. 自定义安装组件
+### 2.3.2. 自定义安装组件
 
 部署工具的[使用文档](https://learn.microsoft.com/zh-cn/deployoffice/office-deployment-tool-configuration-options#product-element)
 
@@ -109,11 +118,11 @@ lastmod: 2024-09-27 17:07:04
 
 
 
-## 2.3. 激活
+## 2.4. 激活
 
 解压下载的安装脚本`Microsoft-Activation-Scripts-master.zip`，直接双击运行`Microsoft-Activation-Scripts-master/MAS/All-In-One-Version/MAS_AIO.cmd`
 
-我们选择[2.5. Ohook](#2.5.%20Ohook)的方式激活，按`2`
+我们选择[2.6. Ohook](03%20Resource/windows%20&%20office安装激活.md#2.6.%20Ohook)的方式激活，按`2`
 
 ![](/_assets/5261e2978a3415c8c415d6b527ed533c_MD5.png)
 
@@ -121,11 +130,11 @@ lastmod: 2024-09-27 17:07:04
 
 ![](/_assets/9dcc693246e28f965d57b014a91aa705_MD5.png)
 
-## 2.4. 卸载
+## 2.5. 卸载
 
 如需卸载，上图中按`2`，选择`Uninstall`即可卸载激活信息
 
-## 2.5. Ohook
+## 2.6. Ohook
 
 原理上说，KMS 激活是写信告知了微软：「兄弟，咱们是正规军，有手续的那种」，然后一路拿着许可证通过检测。
 
