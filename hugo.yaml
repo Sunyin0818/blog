@@ -9,7 +9,8 @@ enableRobotsTXT: true # 允许爬虫抓取到搜索引擎，建议 true
 defaultContentLanguage: zh # 最顶部首先展示的语言页面
 defaultContentLanguageInSubdir: false
 
-paginate: 15 # 首页每页显示的文章数
+pagination:
+  pagerSize: 15 # 首页每页显示的文章数
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
