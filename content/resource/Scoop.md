@@ -86,13 +86,7 @@ main       https://mirror.nju.edu.cn/git/scoop-main.git
 nerd-fonts https://mirror.nju.edu.cn/git/scoop-nerd-fonts.git
 ```
 
-## 3.2. 大一统仓库
-
-```powershell
- scoop bucket add spc https://ghproxy.com/https://github.com/lzwme/scoop-proxy-cn
-```
-
-## 3.3. 个人常用
+## 3.2. 个人常用
 
 ```powershell
 scoop bucket add dorado https://github.com/chawyehsu/dorado
