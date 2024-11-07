@@ -36,12 +36,12 @@ params:
     buttons:
       # - name: Project
       #   url: "/project"
-      - name: 关注
+      - name: Area
         url: "/area"
-      - name: 资源
+      - name: Resource
         url: "/resource"
-      # - name: Archive
-      #   url: "/archive"
+      - name: Archive
+        url: "/archive"
   
   # homeInfoParams:
   #   title: 记录
