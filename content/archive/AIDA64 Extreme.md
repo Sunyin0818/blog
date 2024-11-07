@@ -1,12 +1,12 @@
 ---
-title: AIDA64 Extreme v7.20.6802
+title: AIDA64 Extreme
 category:
   - archive
 tags:
   - 工具折腾
 publish: true
 date: 2024-11-04 15:46:21
-lastmod: 2024-11-07 09:31:13
+lastmod: 2024-11-07 10:12:06
 ---
 > 感谢 [https://www.bilibili.com/read/cv27585649/](https://www.bilibili.com/read/cv27585649/)
 
