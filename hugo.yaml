@@ -14,7 +14,7 @@ pagination:
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  author: Sunyin
+  # author: Sunyin
   defaultTheme: auto # defaultTheme: light or  dark
   DateFormat: "2006-01-02"  # 日期格式化
   ShowCodeCopyButtons: true
