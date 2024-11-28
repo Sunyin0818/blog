@@ -6,7 +6,7 @@ tags:
   - windows
 publish: true
 date: 2024-08-27 15:06:18
-lastmod: 2024-09-27 17:14:05
+lastmod: 2024-11-28 14:31:35
 ---
 WSL 是 Windows 下的Linux子系统，可以代替虚拟机来运行 Linux 系统，占用资源少，使用方便，下面说一下如何对已发布子系统进行迁移。一种情况是针对同一个系统，更换安装的位置；另一种情况跟换机器或重装系统后的迁移。
 
@@ -156,7 +156,7 @@ Log "---Finish---"
 
 导入后提示“WSL 2 需要更新其内核组件”，访问[旧版 WSL 的手动安装步骤](https://docs.microsoft.com/zh-cn/windows/wsl/install-manual)，下载更新包安装即可
 
-![[_assets/e8878120c4ca3177a8e0469d95772af0_MD5.png|_assets/e8878120c4ca3177a8e0469d95772af0_MD5.png]]
+![](/_assets/e8878120c4ca3177a8e0469d95772af0_MD5.png)
 
 ## 4.2. 默认用户问题
 
