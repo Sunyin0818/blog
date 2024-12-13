@@ -16,7 +16,7 @@ params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   # author: Sunyin
   defaultTheme: auto # defaultTheme: light or  dark
-  DateFormat: "2006-01-02"  # 日期格式化
+  DateFormat: "2006-01-02" # 日期格式化
   ShowCodeCopyButtons: true
   displayFullLangName: true
   ShowPostNavLinks: true
@@ -39,17 +39,24 @@ params:
       #   url: "/project"
       - name: Area
         url: "/area"
-      - name: Resource
-        url: "/resource"
+      # - name: Resource
+      # url: "/resource"
       - name: Archive
         url: "/archive"
-  
+
   # homeInfoParams:
   #   title: 记录
   #   content: 天高云阔，风语如歌
   socialIcons:
     - name: github
       url: "https://github.com/Sunyin0818"
+  # assets:
+  #   favicon: "/favicon.ico"
+  #   favicon16x16: "/favicon-16x16.png"
+  #   favicon32x32: "/favicon-32x32.png"
+  #   apple_touch_icon: "/apple-touch-icon.png"
+  #  # safari_pinned_tab: "/safari-pinned-tab.svg"
+
 markup:
   goldmark:
     renderer:
