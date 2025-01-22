@@ -3,7 +3,7 @@ title: iStoreOS分区扩容
 category:
   - area
 tags:
-  - pve
+  - PVE
 publish: true
 date: 2024-11-13 15:21:40
 lastmod: 2025-01-22 15:42:54
