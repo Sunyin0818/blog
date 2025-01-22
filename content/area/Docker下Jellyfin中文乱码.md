@@ -3,7 +3,7 @@ title: Docker下Jellyfin中文乱码
 category:
   - area
 tags:
-  - pve
+  - PVE
 publish: true
 date: 2025-01-21 11:41:32
 lastmod: 2025-01-22 15:44:27
