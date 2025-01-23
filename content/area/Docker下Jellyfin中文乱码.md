@@ -6,9 +6,9 @@ tags:
   - PVE
 publish: true
 date: 2025-01-21 11:41:32
-lastmod: 2025-01-22 15:44:27
+lastmod: 2025-01-23 11:46:10
 ---
-# 问题
+# 1. 问题
 
 容器化使用jellyfin对中文支持不那么友好，比如
 
@@ -18,9 +18,9 @@ lastmod: 2025-01-22 15:44:27
 字幕乱码
 ![](/_assets/Pasted%20image%2020250121114415.png)
 
-# 解决方案
+# 2. 解决方案
 
-## 封面乱码
+## 2.1. 封面乱码
 
 创建一个新的挂载路径`fonts/dejavu` 指向容器内路径 `/usr/share/fonts/truetype/dejavu`
 
@@ -46,7 +46,7 @@ DejaVuSerif.ttf
 
 重启jellyfin容器，删除封面，重新扫描媒体库即可。 
 
-## 字幕乱码
+## 2.2. 字幕乱码
 
 1. 挂载路径下的config中创建fonts文件夹 
 2. 下载字体包 [Noto Sans SC woff2](https://raw.githubusercontent.com/CodePlayer/webfont-noto/master/release/NotoSansCJKsc-hinted-standard.zip "Noto Sans SC woff2") 
