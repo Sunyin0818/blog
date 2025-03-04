@@ -26,36 +26,39 @@ params:
   ShowToc: true # 显示目录
   TocOpen: true # 自动展开目录
 
-  profileMode:
-    enabled: true
-    title: "记录" # optional default will be site title
-    subtitle: "天高云阔，风语如歌"
-    # imageUrl: "<image link>" # optional
-    # imageTitle: "<title of image as alt>" # optional
-    # imageWidth: 120 # custom size
-    # imageHeight: 120 # custom size
-    buttons:
-      # - name: Project
-      #   url: "/project"
-      - name: Area
-        url: "/area"
-      # - name: Resource
-      # url: "/resource"
-      - name: Archive
-        url: "/archive"
+  # profileMode:
+  #   enabled: true
+  #   title: "记录" # optional default will be site title
+  #   subtitle: "天高云阔，风语如歌"
+  #   # imageUrl: "<image link>" # optional
+  #   # imageTitle: "<title of image as alt>" # optional
+  #   # imageWidth: 120 # custom size
+  #   # imageHeight: 120 # custom size
+  #   buttons:
+  #     # - name: Project
+  #     #   url: "/project"
+  #     - name: Area
+  #       url: "/area"
+  #     # - name: Resource
+  #     # url: "/resource"
+  #     - name: Archive
+  #       url: "/archive"
 
-  # homeInfoParams:
-  #   title: 记录
-  #   content: 天高云阔，风语如歌
+  homeInfoParams:
+    title: 记录
+    content: 天高云阔，风语如歌
   socialIcons:
     - name: github
       url: "https://github.com/Sunyin0818"
-  # assets:
-  #   favicon: "/favicon.ico"
-  #   favicon16x16: "/favicon-16x16.png"
-  #   favicon32x32: "/favicon-32x32.png"
-  #   apple_touch_icon: "/apple-touch-icon.png"
-  #  # safari_pinned_tab: "/safari-pinned-tab.svg"
+  assets:
+    favicon: "/favicon.ico"
+
+menu:
+  main:
+    - identifier: Tags
+      name: Tags
+      url: tags
+      weight: 1
 
 markup:
   goldmark:
