@@ -9,8 +9,8 @@ enableRobotsTXT: true # 允许爬虫抓取到搜索引擎，建议 true
 defaultContentLanguage: zh # 最顶部首先展示的语言页面
 defaultContentLanguageInSubdir: false
 
-pagination:
-  pagerSize: 15 # 首页每页显示的文章数
+# pagination:
+#   pagerSize: 15 # 首页每页显示的文章数
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
@@ -22,6 +22,10 @@ params:
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
   VisitCount: true
+
+  mainSections:
+    - area
+    - archive
 
   ShowToc: true # 显示目录
   TocOpen: true # 自动展开目录
