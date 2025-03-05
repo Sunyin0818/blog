@@ -6,7 +6,7 @@ tags:
   - NAS
 publish: true
 date: 2025-01-21 11:41:32
-lastmod: 2025-03-05 09:53:13
+lastmod: 2025-03-05 11:35:37
 ---
 # 1. 问题
 
@@ -55,7 +55,8 @@ DejaVuSerif.ttf
 
 
 
-> 参考：
->
+# 3. 参考
+
 > 1. [Jellyfin封面与字幕乱码的解决方法 - 老E的博客](https://appscross.com/blog/jellyfin-cover-and-subtitles-garbled.html)
-> 2. [解决 Docker 安装 Jellyfin 封面图和部分中文字幕变方块 - 川叶 :: 不舍昼夜](https://blog.lishun.me/docker-jellyfin-chinese-fonts)
+> 2. [解决 Docker安装 Jellyfin封面图和部分中文字幕变方块 - 川叶 :: 不舍昼夜](https://blog.lishun.me/docker-jellyfin-chinese-fonts)
+
