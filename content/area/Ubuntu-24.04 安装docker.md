@@ -7,7 +7,7 @@ tags:
   - linux
 publish: true
 date: 2024-09-04 17:32:22
-lastmod: 2024-10-08 11:24:50
+lastmod: 2025-03-24 11:31:35
 ---
 # 1. 安装
 
@@ -79,33 +79,17 @@ sudo mkdir -p /etc/docker
 ## 2.2. 换源
 
 ```bash
-sudo tee /etc/docker/daemon.json <<-'EOF'
-{
+echo '{
   "registry-mirrors": [
- 	"https://dockerpull.com",
-	"https://docker.1panel.live",
-	"https://dockerproxy.cn",
-	"https://docker.hpcloud.cloud"
+    "https://docker.1ms.run",
+    "https://proxy.1panel.live",
+    "https://docker.ketches.cn"
   ]
-}
-EOF
+}' | sudo tee /etc/docker/daemon.json
 ```
 
-
-
-## 2.3. 重启
+重启生效
 
 ```bash
-sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
-
-
-
-## 2.4. 拉取镜像
-
-```bash
-sudo docker pull dockerpull.com/library/openjdk:8
-```
-
-> **说明：**`library`是一个特殊的命名空间，它代表的是官方镜像。如果是某个用户的镜像就把library替换为镜像的用户名
