@@ -6,23 +6,22 @@ tags:
   - windows
 publish: true
 date: 2024-10-21 14:46:09
-lastmod: 2024-11-07 10:12:10
+lastmod: 2025-03-26 15:41:54
 ---
 
 # 问题
 
-win11 ltsc不带OneDrive，手动安装完成后，点击文件资源管理器侧边栏的OneDrive没反应
+win11 ltsc不带OneDrive，手动安装完成后，出现了两个问题
+
++ （必现）点击文件资源管理器侧边栏的OneDrive没反应
++ （偶现）出现了两个OneDrive
 
 
 # 解决
 
-> 解决方案来自这篇[博客](https://www.zcuo.com/archives/ltsc-onedrive)
+## 1. 问题1 无法点击 OneDrive 选项
 
-将以下内容保存为 `onedriver.reg`文件，双击导入注册表，然后在任务管理器中重新启动windows资源管理器
-
-**注意，一定要重启windows资源管理器**
-
-一开始我只是关闭重新打开explorer，发现用户目录下出现了两个一样的OneDrive目录
+将以下内容保存为 `onedriver.reg`文件，双击导入注册表，然后在**任务管理器中重新启动windows资源管理器**
 
 
 
@@ -52,3 +51,22 @@ Windows Registry Editor Version 5.00
 "RelativePath"="OneDrive"
  
 ```
+
+## 2. 问题2 出现两个 OneDrive 选项
+
+打开注册表编辑器，转到如下路径
+```ini
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace
+```
+
+展开 NameSpace
+
+删除非`OneDrive-Personal`项
+
+# 参考
+
+> [https://www.landiannews.com/archives/106309.html](https://www.landiannews.com/archives/106309.html)
+
+
+
+
