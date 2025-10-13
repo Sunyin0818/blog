@@ -54,6 +54,10 @@ params:
   socialIcons:
     - name: github
       url: "https://github.com/Sunyin0818"
+    - name: mail
+      url: "mailto:sunyin0818@gmail.com"
+    - name: rss
+      url: "/index.xml"
   assets:
     favicon: "/favicon.ico"
 
