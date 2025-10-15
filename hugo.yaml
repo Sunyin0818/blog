@@ -58,7 +58,7 @@ params:
       url: "mailto:sunyin0818@gmail.com"
     - name: rss
       url: "/index.xml"
-    - bitcoin:
+    - name: bitcoin
       url: "sunyincoins.sol"
   assets:
     favicon: "/favicon.ico"
