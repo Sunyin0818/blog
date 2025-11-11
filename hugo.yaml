@@ -59,7 +59,7 @@ params:
     - name: rss
       url: "/index.xml"
     - name: bitcoin
-      url: "sunyincoins.sol"
+      url: "https://web3.bio/sunyincoins.sol"
   assets:
     favicon: "/favicon.ico"
 
