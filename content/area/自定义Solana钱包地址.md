@@ -3,10 +3,10 @@ title: 自定义Solana钱包地址
 categories:
   - area
 tags:
-  - "#bitcoin"
+  - bitcoin
 publish: true
 date: 2025-09-03 15:31:48
-lastmod: 2025-10-13 15:33:18
+lastmod: 2025-10-15 09:28:56
 ---
 # 基本知识
 
