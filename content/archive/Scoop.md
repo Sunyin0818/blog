@@ -7,7 +7,7 @@ tags:
   - windows
 publish: true
 date: 2024-08-27 15:06:18
-lastmod: 2024-12-13 17:12:05
+lastmod: 2025-10-15 10:16:43
 ---
 # 1. 安装
 
@@ -48,18 +48,18 @@ iwr -useb get.scoop.sh | iex
 ## 1.3. 设置代理
 
 ```powershell
-scoop config proxy 127.0.0.1:7890
+scoop config proxy 192.168.31.5:7890
 ```
 
 # 2. 重装系统恢复软件
 
 + 重装系统之前,先完整复制用户目录下的scoop文件夹到别的地方
 
-> Tips: 我安装的时候一般习惯把scoop安装到非系统盘，例如`D:\repository\Scoop`，这样重装的时候以上步骤就可以省略了
+> Tips: 我安装的时候一般习惯把scoop安装到非系统盘，例如`D:\repository\Scoop`，这样如果重装系统，以上配置过程就可以跳过了
 
 
 
-- [1.1 设置环境变量](#1.1%20设置环境变量)]
+- [设置环境变量](#1.1%20设置环境变量)
 - 允许脚本执行
 
 ```powershell
