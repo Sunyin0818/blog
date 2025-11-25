@@ -6,7 +6,7 @@ tags:
   - 工具折腾
 publish: true
 date: 2025-11-21 17:09:20
-lastmod: 2025-11-25 09:58:05
+lastmod: 2025-11-25 10:27:16
 ---
 > 参考[官方文档](https://caddyserver.com/docs/install)
 
@@ -67,7 +67,7 @@ AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 WantedBy=multi-user.target
 ```
 
-# Caddyfile
+# 3. Caddyfile
 
 默认为`/etc/caddy/Caddyfile`
 
@@ -77,7 +77,6 @@ WantedBy=multi-user.target
   root * /data/share
   # 启用目录列表（让用户能看到文件夹结构）
   file_server browse
-  # 可选优化：大文件分块（内网传输更稳
   encode gzip
 }
 ```
