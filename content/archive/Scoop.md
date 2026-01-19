@@ -7,7 +7,7 @@ tags:
   - windows
 publish: true
 date: 2024-08-27 15:06:18
-lastmod: 2025-10-15 10:16:43
+lastmod: 2026-01-19 16:41:59
 ---
 # 1. 安装
 
@@ -38,8 +38,6 @@ set-executionpolicy remotesigned -scope currentuser
 然后执行下面的命令安装 Scoop
 
 ```powershell
-Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-# 或
 iwr -useb get.scoop.sh | iex
 ```
 
@@ -51,14 +49,45 @@ iwr -useb get.scoop.sh | iex
 scoop config proxy 192.168.31.5:7890
 ```
 
-# 2. 重装系统恢复软件
+# 2. bukcet推荐
+
+## 2.1. 官方必备
+
+使用`scoop bucket known`查看所有官方的bucket
+
+```plaintext
+main
+extras
+versions
+nirsoft
+sysinternals
+php
+nerd-fonts
+nonportable
+java
+games
+```
+
+可以使用`scoop add <bucket_name>`添加`bucket`，其中`main`一般会默认添加。
+我常用的还有：
+
+```powershell
+scoop bucket add extras
+scoop bucket add versions
+scoop bucket add nerd-fonts
+scoop bucket add java
+```
+
+## 2.2. 第三方
+
+```powershell
+scoop bucket add dorado https://github.com/chawyehsu/dorado
+```
+
+
+# 3. 重装系统恢复软件
 
 + 重装系统之前,先完整复制用户目录下的scoop文件夹到别的地方
-
-> Tips: 我安装的时候一般习惯把scoop安装到非系统盘，例如`D:\repository\Scoop`，这样如果重装系统，以上配置过程就可以跳过了
-
-
-
 - [设置环境变量](#1.1%20设置环境变量)
 - 允许脚本执行
 
@@ -73,21 +102,4 @@ set-executionpolicy remotesigned -s currentuser
 scoop reset *
 ```
 
-# 3. bukcet推荐
-
-## 3.1. 南大镜像
-
-用处不大，下载链接还是指向GitHub，只是让搜索速度变快
-
-```powershell
-extras     https://mirror.nju.edu.cn/git/scoop-extras.git
-java       https://mirror.nju.edu.cn/git/scoop-java.git
-main       https://mirror.nju.edu.cn/git/scoop-main.git
-nerd-fonts https://mirror.nju.edu.cn/git/scoop-nerd-fonts.git
-```
-
-## 3.2. 个人常用
-
-```powershell
-scoop bucket add dorado https://github.com/chawyehsu/dorado
-```
+软件就都恢复了
