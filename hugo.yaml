@@ -1,4 +1,4 @@
-baseURL: "https://blog-xxxx.pages.dev/"   # 首次 Cloudflare Pages 部署后回填（*.pages.dev 地址）
+baseURL: "https://blog.sunyin.fun/"   # Cloudflare Pages 自定义域（已上线）
 title: "Sunyin 的笔记"
 locale: zh-CN
 defaultContentLanguage: zh
