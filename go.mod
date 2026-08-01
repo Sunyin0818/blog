@@ -6,3 +6,5 @@ go 1.23
 //   hugo mod get github.com/adityatelange/hugo-PaperMod@master
 // 该命令会把 PaperMod 的 require 行与 go.sum 写进来（锁 master 伪版本，
 // 而非 v8.0 tag —— master 才是 Hugo ≥0.146 的新 layouts/_partials 结构）。
+
+require github.com/adityatelange/hugo-PaperMod v0.0.0-20260510052646-154d006e0182 // indirect
