@@ -1,0 +1,19 @@
+{{- $text := .Text -}}
+{{- $calloutRegex := `^\[!(\w+)\]([+-]?)\s*(.*)` -}}
+{{- if findRE $calloutRegex $text -}}
+  {{- $m := findRESubmatch $calloutRegex $text -}}
+  {{- $kind := lower (index (index $m 0) 1) -}}
+  {{- $customTitle := index (index $m 0) 3 -}}
+  {{- $classMap := dict "note" "note" "info" "info" "tip" "tip" "hint" "tip" "important" "important" "warning" "warning" "caution" "warning" "danger" "warning" -}}
+  {{- $alert := default "note" (index $classMap $kind) -}}
+  {{- $title := cond (ne $customTitle "") $customTitle (i18n $kind | default (title $kind)) -}}
+  <div class="alert alert-{{ $alert }}">
+    <p class="alert-title">{{ $title }}</p>
+    {{- $body := replaceRE $calloutRegex "" $text -}}
+    <p>{{ $body | safeHTML }}</p>
+  </div>
+{{- else -}}
+<blockquote>
+  {{ .Text | safeHTML }}
+</blockquote>
+{{- end -}}

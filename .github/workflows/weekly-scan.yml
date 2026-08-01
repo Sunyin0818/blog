@@ -1,0 +1,20 @@
+name: weekly-secret-scan
+
+on:
+  schedule:
+    - cron: '0 1 * * 1'   # 周一 09:00 CST = 01:00 UTC
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 全历史，用最新规则重扫旧提交
+
+      - name: Gitleaks full history
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"

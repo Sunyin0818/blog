@@ -1,0 +1,88 @@
+baseURL: "https://blog-xxxx.pages.dev/"   # 首次 Cloudflare Pages 部署后回填（*.pages.dev 地址）
+title: "Sunyin 的笔记"
+languageCode: zh-CN
+defaultContentLanguage: zh
+timeZone: Asia/Shanghai          # ★ 解决无时区 frontmatter
+hasCJKLanguage: true             # ★ 中文 WordCount / Summary 正确
+enableRobotsTXT: true
+buildFuture: false
+
+module:
+  imports:
+    - path: github.com/adityatelange/hugo-PaperMod
+
+taxonomies:
+  tag: tags
+  category: categories
+pagination:
+  pagerSize: 12
+frontmatter:
+  lastmod:
+    - lastmod
+    - ":fileModTime"
+    - date
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON            # ★ JSON 是客户端搜索（fuse.js）必需
+sitemap:
+  changefreq: weekly
+  priority: 0.5
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true            # 笔记里有 <br> 等裸 HTML
+    parser:
+      attribute:
+        block: true
+    extensions:
+      typographer:
+        disable: true         # ★ 中文必关，否则引号/破折号被改写
+  highlight:
+    noClasses: false
+    lineNos: false            # ★ 中文站开了移动端很难受
+    guessSyntax: true
+  tableOfContents:
+    startLevel: 2
+    endLevel: 4
+pygmentsUseClasses: true
+
+params:
+  env: production             # ★ 开 OG / Schema.org
+  mainSections:
+    - AIO
+    - AI
+    - Coding
+    - Linux
+    - Misc
+  DateFormat: "2006-01-02"
+  defaultTheme: auto
+  ShowReadingTime: true
+  ShowBreadCrumbs: true       # 面包屑 = 目录层级
+  ShowToc: true
+  ShowCodeCopyButtons: true
+  ShowLastMod: true           # 配合自定义 post_meta.html
+  comments: true
+  assets:
+    disableHLJS: true
+  fuseOpts:                   # ★ 中文搜索调优
+    threshold: 0.3
+    minMatchCharLength: 1
+    ignoreLocation: true
+    keys:
+      - title
+      - permalink
+      - summary
+      - content
+  # 不配 editPost（会暴露 private 仓库路径）
+
+menu:
+  main:
+    - { name: 自建,   url: /aio/,      weight: 10 }
+    - { name: Linux, url: /linux/,    weight: 20 }
+    - { name: Coding, url: /coding/,  weight: 30 }
+    - { name: 分类,  url: /categories/, weight: 80 }
+    - { name: 归档,  url: /archives/, weight: 90 }
+    - { name: 搜索,  url: /search/,   weight: 99 }

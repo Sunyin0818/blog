@@ -1,0 +1,11 @@
+{{- $date := .Date -}}
+{{- $lastmod := .Lastmod -}}
+<div class="post-meta">
+  <span class="post-date">{{ $date | time.Format "2006-01-02" }}</span>
+  {{- if ne $date $lastmod -}}
+  <span class="post-lastmod"> · 更新于 {{ $lastmod | time.Format "2006-01-02" }}</span>
+  {{- end -}}
+  {{- if .Site.Params.ShowReadingTime -}}
+  <span class="post-read"> · {{ .ReadingTime }} 分钟阅读</span>
+  {{- end -}}
+</div>

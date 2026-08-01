@@ -1,0 +1,10 @@
+{{/* mermaid：放在 footer（正文渲染之后），此时 render-codeblock-mermaid 已把
+     hasMermaid 写入 Store，可可靠地按需加载 CDN。仅 2 篇 mermaid 笔记会触发。 */}}
+{{- if .Page.Store.Get "hasMermaid" -}}
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (window.mermaid) { mermaid.initialize({ startOnLoad: true }); }
+  });
+</script>
+{{- end -}}

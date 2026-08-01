@@ -1,0 +1,8 @@
+/public/
+/resources/
+/.hugo_build.lock
+*.txt~
+
+# 本机临时
+.DS_Store
+Thumbs.db

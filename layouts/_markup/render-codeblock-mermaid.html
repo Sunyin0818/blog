@@ -1,0 +1,10 @@
+{{/* 仅 mermaid 走特殊渲染；其余代码块用 Hugo 自带高亮（与 pygmentsUseClasses 一致）。 */}}
+{{- if eq .Type "mermaid" -}}
+<div class="mermaid">
+{{ .Inner | safeHTML }}
+</div>
+{{- .Page.Store.Set "hasMermaid" true -}}
+{{- else -}}
+{{ $result := .Inner | transform.Highlight .Type }}
+{{ $result | safeHTML }}
+{{- end -}}
