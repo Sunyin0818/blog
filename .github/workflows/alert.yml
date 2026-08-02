@@ -18,3 +18,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+          GITLEAKS_CONFIG: .gitleaks.toml
+        with:
+          # Scan the working tree (not a git diff-range). Robust against
+          # force-pushes / shallow clones where the "before" commit is orphaned.
+          args: --no-git --source .

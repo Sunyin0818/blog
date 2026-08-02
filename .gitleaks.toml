@@ -1,0 +1,20 @@
+# gitleaks config for the blog repo.
+# Extends the upstream default rule set, then allowlists files that look like
+# secrets but are not (our own scan-rule file, lockfiles, build config, CI yaml).
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known-safe skeleton/build files (not real secrets)"
+paths = [
+  '''\.ci/secret-rules\.txt''',
+  '''go\.sum''',
+  '''go\.mod''',
+  '''package-lock\.json''',
+  '''yarn\.lock''',
+  '''pnpm-lock\.yaml''',
+  '''\.github/workflows/.*\.ya?ml''',
+  '''\.gitleaks\.toml''',
+  '''(^|/)hugo\.(ya?ml|toml)''',
+  '''(^|/)config\.(ya?ml|toml)''',
+]
