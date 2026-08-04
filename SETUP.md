@@ -30,9 +30,14 @@ hugo mod get github.com/adityatelange/hugo-PaperMod@master
 ## 4. 本地验证
 
 ```bash
-hugo server -D
+make serve        # 先自动生成缺失的 _index.md，再 hugo server -D
+# 或等价地：
+python3 .ci/gen-index.py && hugo server -D
 # 打开 http://localhost:1313 ，确认首页/分类/搜索/归档/评论/2 篇 mermaid 渲染正常
 ```
+
+> 直接 `hugo server -D` 也能跑，但新建的分区在未生成 _index.md 前
+> 不会出现在 /categories/ 归档页——所以用 `make serve` 最稳。
 
 > 此时 `content/` 下只有骨架页，没有文章是正常的。文章由 Enveloppe 推送。
 

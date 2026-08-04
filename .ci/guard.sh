@@ -3,6 +3,11 @@
 set -uo pipefail
 FAIL=0
 
+# 0. 自动维护分区 _index.md：新发布的分区/嵌套目录若缺 _index.md，
+#    cascaded categories 会失效，且后续 check_frontmatter.py 会判构建失败。
+#    先补生成，再跑门禁，保证 Enveloppe 推送即上线、零手动维护。
+python3 .ci/gen-index.py || true
+
 TARGETS=$(find content static -type f \( -name '*.md' -o -name '*.html' \) 2>/dev/null)
 [ -z "$TARGETS" ] && exit 0
 
