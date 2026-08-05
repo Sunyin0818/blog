@@ -12,7 +12,9 @@ TARGETS=$(find content static -type f \( -name '*.md' -o -name '*.html' \) 2>/de
 [ -z "$TARGETS" ] && exit 0
 
 # ① 密钥正则（第一梯队，命中即失败）
+# 容错：剥离 CRLF 行尾，避免空白行被当成「空正则」命中全部内容
 while IFS='|' read -r NAME PATTERN; do
+  NAME=${NAME%$'\r'}; PATTERN=${PATTERN%$'\r'}
   [ -z "${NAME:-}" ] && continue
   case "$NAME" in \#*) continue;; esac
   HITS=$(echo "$TARGETS" | xargs -r grep -nPI "$PATTERN" 2>/dev/null \

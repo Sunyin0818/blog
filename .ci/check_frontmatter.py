@@ -74,11 +74,13 @@ def main():
         # --- 文章校验 ---
         if not (fm.get("title") or "").strip():
             errors.append(f"{rel}: 缺少必填字段 title")
+        # slug 可选：笔记只放本体、不写 slug，Hugo 默认用文件路径当 URL。
+        # 若显式写了 slug 才校验格式（长度/字符），未写则不报错。
         slug = fm.get("slug")
-        if not (slug or "").strip():
-            errors.append(f"{rel}: 缺少必填字段 slug")
-        elif isinstance(slug, str):
-            if len(slug) > 40:
+        if slug:
+            if not isinstance(slug, str) or not (slug or "").strip():
+                errors.append(f"{rel}: slug 存在但为空")
+            elif len(slug) > 40:
                 errors.append(f"{rel}: slug 长度 > 40 ({slug})")
             elif not SLUG_RE.match(slug):
                 errors.append(f"{rel}: slug 格式非法 ({slug})")
