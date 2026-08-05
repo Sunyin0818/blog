@@ -1,10 +1,275 @@
-{{/* mermaid：放在 footer（正文渲染之后），此时 render-codeblock-mermaid 已把
-     hasMermaid 写入 Store，可可靠地按需加载 CDN。仅 2 篇 mermaid 笔记会触发。 */}}
-{{- if .Page.Store.Get "hasMermaid" -}}
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+{{/* ============ Mermaid（客户端按需懒加载：页面含 .mermaid 才拉 CDN） ============ */}}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    if (window.mermaid) { mermaid.initialize({ startOnLoad: true }); }
+    if (!document.querySelector(".mermaid")) return;
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js";
+    s.onload = function () {
+      if (!window.mermaid) return;
+      function mermaidTheme() {
+        return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "default";
+      }
+      mermaid.initialize({ startOnLoad: false, theme: mermaidTheme(), securityLevel: "loose" });
+      mermaid.run();
+      // 主题切换时重新渲染，避免暗色下出现白底图
+      var mo = new MutationObserver(function () {
+        document.querySelectorAll(".mermaid").forEach(function (n) { n.removeAttribute("data-processed"); });
+        mermaid.initialize({ theme: mermaidTheme() });
+        mermaid.run();
+      });
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    };
+    document.head.appendChild(s);
   });
 </script>
-{{- end -}}
+
+{{/* ============ 代码块语言标签 ============ */}}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".highlight").forEach(function (hl) {
+      if (hl.querySelector(".code-lang")) return;
+      var code = hl.querySelector("code[data-lang]");
+      if (!code) return;
+      var badge = document.createElement("span");
+      badge.className = "code-lang";
+      badge.textContent = code.getAttribute("data-lang");
+      hl.insertBefore(badge, hl.firstChild);
+    });
+  });
+</script>
+
+{{/* ============ 目录：桌面端默认展开为侧边栏 ============ */}}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var toc = document.querySelector(".post-single > .toc");
+    if (!toc) return;
+    function syncToc() {
+      if (window.innerWidth >= 1024) {
+        toc.setAttribute("open", "");
+      } else if (toc.hasAttribute("open")) {
+        toc.removeAttribute("open");
+      }
+    }
+    syncToc();
+    window.addEventListener("resize", syncToc);
+  });
+</script>
+
+{{/* ============ 图片灯箱（点击放大） ============ */}}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var overlay = document.createElement("div");
+    overlay.className = "lb-overlay";
+    var ob = document.createElement("img");
+    ob.alt = "preview";
+    overlay.appendChild(ob);
+    document.body.appendChild(overlay);
+    function open(src) { ob.src = src; overlay.classList.add("open"); }
+    function close() { overlay.classList.remove("open"); ob.src = ""; }
+    document.querySelectorAll(".post-content img").forEach(function (img) {
+      if (img.closest("a")) return; // 已在链接内的图不拦截
+      img.classList.add("zoomable");
+      img.addEventListener("click", function () { open(img.src); });
+    });
+    overlay.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  });
+</script>
+
+{{/* ============ 打赏（加密货币：Solana） ============ */}}
+<section class="tip" aria-label="打赏">
+  <div class="tip-head">
+    <span class="tip-emoji">&#9749;</span>
+    <span class="tip-title">打赏</span>
+  </div>
+  <p class="tip-sub">内容对你有帮助？欢迎请我喝杯咖啡 &#9749;</p>
+  <div class="tip-list">
+    <div class="tip-item">
+      <div class="tip-row">
+        <span class="tip-chain-badge sol" title="Solana">
+          <svg class="sol-logo" viewBox="0 0 397.7 311.7" width="14" height="14" aria-hidden="true">
+            <defs><linearGradient id="solana-grad" gradientUnits="userSpaceOnUse" x1="360.879" y1="351.455" x2="149.212" y2="-32.706" gradientTransform="matrix(1 0 0 -1 0 314)">
+              <stop offset="0" stop-color="#00ffa3"/><stop offset="1" stop-color="#dc1fff"/>
+            </linearGradient></defs>
+            <path fill="url(#solana-grad)" d="M64.6 237.9c2.4-2.4 5.7-3.8 9.2-3.8h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8H6.5c-5.8 0-8.7-7-4.6-11.1l62.7-62.7z"/>
+            <path fill="url(#solana-grad)" d="M64.6 3.8C67.1 1.4 70.4 0 73.8 0h317.4c5.8 0 8.7 7 4.6 11.1l-62.7 62.7c-2.4 2.4-5.7 3.8-9.2 3.8H6.5c-5.8 0-8.7-7-4.6-11.1L64.6 3.8z"/>
+            <path fill="url(#solana-grad)" d="M333.1 120.1c-2.4-2.4-5.7-3.8-9.2-3.8H6.5c-5.8 0-8.7 7-4.6 11.1l62.7 62.7c2.4 2.4 5.7 3.8 9.2 3.8h317.4c5.8 0 8.7-7 4.6-11.1l-62.8-62.7z"/>
+          </svg>
+          Solana
+        </span>
+        <code class="tip-addr" id="tip-addr-sol">5EvHUYo6E9ie8Rd5rjY5PVpPgcu9V1RS8KsgMsVqTEUr</code>
+        <button class="tip-copy" type="button" data-addr="5EvHUYo6E9ie8Rd5rjY5PVpPgcu9V1RS8KsgMsVqTEUr">复制</button>
+      </div>
+      <div class="tip-qr" id="tip-qr-sol"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // 复制地址
+    document.querySelectorAll(".tip-copy").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var addr = btn.getAttribute("data-addr");
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(addr).then(function () {
+            var old = btn.textContent; btn.textContent = "已复制";
+            setTimeout(function () { btn.textContent = old; }, 1500);
+          });
+        }
+      });
+    });
+    // 二维码：进入视口时懒加载 qrcodejs（CDN）生成
+    var solAddr = "5EvHUYo6E9ie8Rd5rjY5PVpPgcu9V1RS8KsgMsVqTEUr";
+    function loadTipQR() {
+      var box = document.getElementById("tip-qr-sol");
+      if (!box || box.dataset.loaded) return;
+      box.dataset.loaded = "1";
+      var s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js";
+      s.onload = function () {
+        if (!window.QRCode) return;
+        new QRCode(box, { text: solAddr, width: 128, height: 128, colorDark: "#0b0b0b", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+      };
+      s.onerror = function () { box.innerHTML = '<small class="tip-qr-fallback">二维码加载失败，请直接复制地址</small>'; };
+      document.head.appendChild(s);
+    }
+    var tipSec = document.querySelector(".tip");
+    if (tipSec && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) loadTipQR(); });
+      }, { threshold: 0.15 }).observe(tipSec);
+    } else {
+      loadTipQR();
+    }
+  });
+</script>
+
+{{/* ============ 搜索弹层（Ctrl/⌘+K 或点击「搜索」触发） ============ */}}
+<div id="search-modal" class="search-modal" aria-hidden="true">
+  <div class="search-modal-backdrop" data-close></div>
+  <div class="search-modal-panel" role="dialog" aria-modal="true" aria-label="搜索笔记">
+    <div class="search-modal-row">
+      <svg class="search-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input id="search-modal-input" type="search" placeholder="搜索笔记…" autocomplete="off" spellcheck="false" />
+      <kbd class="search-modal-kbd" data-close title="关闭">Esc</kbd>
+    </div>
+    <ul id="search-modal-results" class="search-modal-results"></ul>
+    <div id="search-modal-empty" class="search-modal-empty">输入关键词开始搜索</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var modal = document.getElementById("search-modal");
+  if (!modal) return;
+  var input = document.getElementById("search-modal-input");
+  var results = document.getElementById("search-modal-results");
+  var empty = document.getElementById("search-modal-empty");
+  var indexData = null, fuse = null;
+
+  function esc(s) {
+    return (s || "").replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function stripHtml(s) {
+    var d = document.createElement("div");
+    d.innerHTML = s || "";
+    return d.textContent || "";
+  }
+  function loadIndex(cb) {
+    if (indexData) { cb(); return; }
+    fetch("/index.json").then(function (r) { return r.json(); }).then(function (d) {
+      indexData = d || []; cb();
+    }).catch(function () { indexData = []; cb(); });
+  }
+  function ensureFuse(cb) {
+    if (window.Fuse) { cb(true); return; }
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js";
+    s.onload = function () { cb(true); };
+    s.onerror = function () { cb(false); };
+    document.head.appendChild(s);
+  }
+  function buildFuse() {
+    if (fuse || !indexData || !window.Fuse) return;
+    fuse = new Fuse(indexData, {
+      threshold: 0.3, minMatchCharLength: 1, ignoreLocation: true,
+      keys: ["title", "permalink", "summary", "content"]
+    });
+  }
+  function render(list) {
+    results.innerHTML = "";
+    if (!list.length) {
+      results.style.display = "none";
+      empty.style.display = "block";
+      empty.textContent = input.value.trim() ? "没有找到相关笔记" : "输入关键词开始搜索";
+      return;
+    }
+    empty.style.display = "none";
+    results.style.display = "block";
+    list.slice(0, 30).forEach(function (it) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = it.permalink;
+      a.className = "search-modal-result";
+      var sum = stripHtml(it.summary || "");
+      if (sum.length > 120) sum = sum.slice(0, 120) + "…";
+      a.innerHTML = '<span class="search-modal-result-title">' + esc(it.title) + "</span>" +
+        (sum ? '<span class="search-modal-result-sum">' + esc(sum) + "</span>" : "");
+      li.appendChild(a);
+      results.appendChild(li);
+    });
+  }
+  function doSearch(q) {
+    if (!q) { render([]); return; }
+    buildFuse();
+    if (fuse) {
+      render(fuse.search(q).map(function (r) { return r.item; }));
+    } else {
+      var ql = q.toLowerCase();
+      render(indexData.filter(function (it) {
+        return (it.title + " " + it.summary + " " + it.content).toLowerCase().indexOf(ql) >= 0;
+      }));
+    }
+  }
+  function openSearch() {
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    input.value = "";
+    render([]);
+    loadIndex(function () {
+      ensureFuse(function () { buildFuse(); input.focus(); });
+    });
+  }
+  function closeSearch() {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    input.value = "";
+    render([]);
+  }
+  document.addEventListener("keydown", function (e) {
+    if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {
+      e.preventDefault(); // 拦截浏览器默认的地址栏/搜索栏聚焦
+      openSearch();
+    } else if (e.key === "Escape" && modal.classList.contains("open")) {
+      closeSearch();
+    }
+  });
+  var searchLink = document.querySelector("[data-search-open]");
+  if (searchLink) {
+    searchLink.addEventListener("click", function (e) { e.preventDefault(); openSearch(); });
+  }
+  modal.addEventListener("click", function (e) {
+    if (e.target.hasAttribute("data-close")) closeSearch();
+  });
+  input.addEventListener("input", function () { doSearch(input.value.trim()); });
+})();
+</script>

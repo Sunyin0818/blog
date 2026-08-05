@@ -1,13 +1,16 @@
 {{ if and .Site.Params.comments (not .Params.disableComments) }}
+{{- with site.Params.giscus -}}
+{{- $repoId := .repoId | default "" -}}
+{{- if and $repoId (ne $repoId "YOUR_GISCUS_REPO_ID") -}}
 <div id="giscus-container"></div>
 <script src="https://giscus.app/client.js"
-        data-repo="Sunyin0818/blog-comments"
-        data-repo-id="YOUR_GISCUS_REPO_ID"
-        data-category="Announcements"
-        data-category-id="YOUR_GISCUS_CATEGORY_ID"
-        data-mapping="pathname"
+        data-repo="{{ .repo | default "Sunyin0818/blog-comments" }}"
+        data-repo-id="{{ $repoId }}"
+        data-category="{{ .category | default "Announcements" }}"
+        data-category-id="{{ .categoryId | default "" }}"
+        data-mapping="{{ .mapping | default "pathname" }}"
         data-strict="0"
-        data-reactions-enabled="1"
+        data-reactions-enabled="{{ .reactions | default "1" }}"
         data-emit-metadata="0"
         data-input-position="bottom"
         data-theme="preferred_color_scheme"
@@ -15,4 +18,23 @@
         crossorigin="anonymous"
         async>
 </script>
+<script>
+  /* 站点主题切换时同步 giscus 明暗 */
+  document.addEventListener("DOMContentLoaded", function () {
+    var mo = new MutationObserver(function () {
+      var iframe = document.querySelector("#giscus-container iframe");
+      if (!iframe) return;
+      var theme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, "https://giscus.app");
+    });
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  });
+</script>
+{{- else -}}
+{{/* repo-id 尚未配置：留占位容器，待在 hugo.yaml 的 params.giscus.repoId 填写 */}}
+<div id="giscus-container" data-giscus-pending="1"></div>
+{{- end -}}
+{{- else -}}
+<div id="giscus-container" data-giscus-pending="1"></div>
+{{- end -}}
 {{ end }}

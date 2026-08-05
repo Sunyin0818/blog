@@ -6,6 +6,7 @@
 # 本机临时
 .DS_Store
 Thumbs.db
+_buildtest/
 
 # gitleaks 扫描产物（本地验证用，不入库）
 results*.sarif

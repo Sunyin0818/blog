@@ -1,0 +1,139 @@
+{{- define "main" }}
+
+<header class="page-header">
+    <h1>全部笔记</h1>
+    <div class="post-description">
+        {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+        {{- $n := len $pages }}
+        共 {{ $n }} 篇
+    </div>
+</header>
+
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $rawGroups := $pages.GroupByDate "2006-01" }}
+{{- /* 物化（realize）：GroupByDate 返回惰性 PageGroups，第一个 range 会按升序"实现"它，
+       导致第二次 range 的 .Reverse 才真正反转、两次顺序不一致。先 append 进普通 slice，
+       再用 sort 按 Key(YYYY-MM) 降序，彻底绕开 .Reverse 对 PageGroups 不可靠的问题。 */ -}}
+{{- $groups := slice }}
+{{- range $rawGroups }}{{ $groups = $groups | append . }}{{ end }}
+{{- $ordered := sort $groups "Key" "desc" }}
+
+<div class="notes-layout">
+    <nav class="notes-timeline" aria-label="时间线">
+        <ol>
+            <span class="tl-progress" aria-hidden="true"></span>
+            {{- range $ordered }}
+            {{- $ym := .Key }}
+            {{- $dt := printf "%s-01" $ym | time }}
+            <li>
+                <a href="#m-{{ $ym }}" title="{{ $dt.Format "2006 年 1 月" }}">
+                    {{ $dt.Format "2006.01" }}
+                </a>
+            </li>
+            {{- end }}
+        </ol>
+    </nav>
+
+    <div class="notes-list">
+        {{- range $ordered }}
+        {{- $ym := .Key }}
+        {{- $dt := printf "%s-01" $ym | time }}
+        <section class="notes-month" id="m-{{ $ym }}">
+            <h2 class="notes-month-title">
+                {{ $dt.Format "2006 年 1 月" }}
+                <span class="notes-month-count">{{ len .Pages }} 篇</span>
+            </h2>
+            <div class="archive-posts">
+                {{- range .Pages.ByDate.Reverse }}
+                <div class="archive-entry">
+                    <h3 class="archive-entry-title entry-hint-parent">
+                        {{- .Title | markdownify -}}
+                        {{- if .Draft }}
+                        <span class="entry-hint" title="Draft">D</span>
+                        {{- end }}
+                    </h3>
+                    <div class="archive-meta">
+                        {{- partial "post_meta.html" . -}}
+                    </div>
+                    <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .RelPermalink }}"></a>
+                </div>
+                {{- end }}
+            </div>
+        </section>
+        {{- end }}
+    </div>
+</div>
+
+<script>
+(function () {
+    var nav = document.querySelector(".notes-timeline");
+    var ol = nav ? nav.querySelector("ol") : null;
+    var progress = nav ? nav.querySelector(".tl-progress") : null;
+    var links = document.querySelectorAll(".notes-timeline a");
+    if (!links.length) return;
+    var map = {};
+    links.forEach(function (a) {
+        var id = a.getAttribute("href").slice(1);
+        map[id] = a;
+    });
+    var sections = Object.keys(map)
+        .map(function (id) { return document.getElementById(id); })
+        .filter(Boolean);
+
+    // 进度填充线：高度 = 当前激活点中心相对 ol 顶部的偏移
+    function setProgress(a) {
+        if (!a || !progress || !ol) return;
+        var olRect = ol.getBoundingClientRect();
+        var aRect = a.getBoundingClientRect();
+        var center = (aRect.top - olRect.top) + aRect.height / 2;
+        progress.style.height = Math.max(0, center - 7) + "px";
+    }
+    function currentActive() {
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].classList.contains("active")) return links[i];
+        }
+        return null;
+    }
+
+    // 点击平滑滚动到对应月份
+    links.forEach(function (a) {
+        a.addEventListener("click", function (ev) {
+            var id = a.getAttribute("href").slice(1);
+            var el = document.getElementById(id);
+            if (el) {
+                ev.preventDefault();
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
+    });
+
+    // 滚动高亮当前月份 + 同步进度填充线
+    if ("IntersectionObserver" in window && sections.length) {
+        var obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                var a = map[e.target.id];
+                if (!a) return;
+                if (e.isIntersecting) {
+                    links.forEach(function (l) { l.classList.remove("active"); });
+                    a.classList.add("active");
+                    setProgress(a);
+                }
+            });
+        }, { rootMargin: "-15% 0px -75% 0px", threshold: 0 });
+        sections.forEach(function (s) { obs.observe(s); });
+    }
+
+    // 初始填充 + 滚动/缩放时实时更新进度线
+    setProgress(currentActive() || links[0]);
+    window.addEventListener("scroll", function () {
+        var a = currentActive() || links[0];
+        if (a) setProgress(a);
+    }, { passive: true });
+    window.addEventListener("resize", function () {
+        var a = currentActive() || links[0];
+        if (a) setProgress(a);
+    });
+})();
+</script>
+
+{{- end }}{{/* end main */}}

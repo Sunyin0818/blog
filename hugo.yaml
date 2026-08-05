@@ -34,6 +34,7 @@ markup:
   goldmark:
     renderer:
       unsafe: true            # 笔记里有 <br> 等裸 HTML
+      hardWraps: true         # 单个换行渲染为 <br>（引用/笔记里使换行可见）
     parser:
       attribute:
         block: true
@@ -52,11 +53,11 @@ pygmentsUseClasses: true
 params:
   env: production             # ★ 开 OG / Schema.org
   mainSections:
-    - AIO
-    - AI
-    - Coding
-    - Linux
-    - Misc
+    - aio
+    - ai
+    - coding
+    - linux
+    - misc
   DateFormat: "2006-01-02"
   defaultTheme: auto
   ShowReadingTime: true
@@ -76,6 +77,29 @@ params:
       - permalink
       - summary
       - content
+  profileMode:
+    enabled: true
+    title: "Sunyin"
+    subtitle: "折腾 · 自托管 · 笔记"
+    description: "天高云阔，风语如歌"
+    imageUrl: ""          # 可选：放头像图（如 /avatar.jpg）后在此填写路径
+    buttons:
+      - name: 浏览笔记
+        url: /notes/
+  socialIcons:
+    - name: github
+      url: "https://github.com/Sunyin0818"
+      title: GitHub
+    - name: email
+      url: "mailto:sunyinxx@gmail.com"
+      title: Email
+  giscus:
+    repo: "Sunyin0818/blog-comments"   # giscus 评论仓库（owner/repo）
+    repoId: "R_kgDOTr760Q"               # giscus.app 生成
+    category: "Announcements"           # 讨论分类名（需与仓库 Discussions 中一致）
+    categoryId: "DIC_kwDOTr760c4DCjJO"   # giscus.app 生成
+    mapping: "pathname"                 # 评论与页面映射方式
+    reactions: "1"                      # 是否显示反应按钮
   # 不配 editPost（会暴露 private 仓库路径）
 
 menu:
