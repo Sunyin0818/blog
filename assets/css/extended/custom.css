@@ -356,16 +356,19 @@ details.alert > .alert-body {
     float: right;
     position: sticky;
     top: calc(64px + 1rem);
-    width: 320px !important;
+    width: 380px !important;
     max-height: calc(100vh - 64px - 2rem);
     overflow-y: auto;
+    overflow-x: auto;
     margin: 0 0 1.5rem 2rem;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
   }
   /* 给正文让出右侧目录的空间 */
   .post-content {
-    margin-right: calc(320px + 2rem);
+    margin-right: calc(380px + 2rem);
+  }
+  /* 节点名不换行；装不下时由父容器出现 x 滚动条 */
+  .toc a {
+    white-space: nowrap;
   }
 }
 /* 评论框在文章（.post-single）之外单独成块，目录不会与其发生水平挤压/遮挡 */
