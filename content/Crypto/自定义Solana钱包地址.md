@@ -1,5 +1,6 @@
 ---
 title: 自定义Solana钱包地址
+slug: zi-ding-yi-solana-qian-bao-di-zhi
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true
