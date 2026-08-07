@@ -1,0 +1,177 @@
+name: build-deploy-notify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run build-time guard
+        run: bash .ci/guard.sh
+      - name: Gitleaks scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+          GITLEAKS_CONFIG: .gitleaks.toml
+        with:
+          args: --no-git --source . --report gitleaks-report.json --report-format json
+      - name: Upload gitleaks report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: gitleaks-report.json
+          if-no-files-found: ignore
+
+  build-and-deploy:
+    needs: guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Go (Hugo Modules 需要)
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - name: Setup Hugo (extended)
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.164.0"
+          extended: true
+      - name: Fetch Hugo modules (PaperMod)
+        env:
+          GIT_TERMINAL_PROMPT: "0"
+        run: hugo mod get -u ./...
+      - name: Prepare section indexes
+        run: python3 .ci/gen-index.py
+      - name: Build
+        run: hugo --gc --minify
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=${{ vars.CLOUDFLARE_PROJECT_NAME }} --branch=main --commit-dirty=true
+
+  notify:
+    needs: [guard, build-and-deploy]
+    runs-on: ubuntu-latest
+    if: always()
+    env:
+      GUARD_STATUS: ${{ needs.guard.result }}
+      BUILD_STATUS: ${{ needs.build-and-deploy.result }}
+      WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+      SECRET: ${{ secrets.FEISHU_SECRET }}
+    steps:
+      - name: Checkout (统计已发布笔记用)
+        uses: actions/checkout@v4
+      - name: Download gitleaks report
+        uses: actions/download-artifact@v4
+        with:
+          name: gitleaks-report
+          path: gitleaks-artifacts
+        continue-on-error: true
+      - name: Send Feishu notification
+        run: |
+          python3 - <<'PY'
+          import os, json, time, hmac, hashlib, base64, urllib.request
+          import glob, re
+          from datetime import datetime, timezone, timedelta
+
+          guard_status = os.environ.get("GUARD_STATUS", "")
+          build_status = os.environ.get("BUILD_STATUS", "")
+          guard_ok = guard_status == "success"
+          build_ok = build_status == "success"
+          ok = guard_ok and build_ok
+
+          repo = os.environ.get("GITHUB_REPOSITORY", "")
+          sha = os.environ.get("GITHUB_SHA", "")[:7]
+          run_url = os.environ.get("GITHUB_SERVER_URL", "") + "/" + repo + "/actions/runs/" + os.environ.get("GITHUB_RUN_ID", "")
+
+          leaks = []
+          try:
+              with open("gitleaks-artifacts/gitleaks-report.json", encoding="utf-8") as fh:
+                  rep = json.load(fh)
+              leaks = rep.get("findings", []) or []
+          except Exception:
+              leaks = []
+
+          if ok:
+              title = "✅ 博客构建部署成功"
+          elif not guard_ok and leaks:
+              title = "❌ 密钥泄漏被拦截，已阻止部署"
+          elif not guard_ok:
+              title = "❌ 发布门禁未通过（frontmatter 校验）"
+          else:
+              title = "❌ 构建部署失败"
+
+          published = 0
+          for f in glob.glob("content/**/*.md", recursive=True):
+              try:
+                  with open(f, encoding="utf-8") as fh:
+                      txt = fh.read()
+              except Exception:
+                  continue
+              m = re.match(r"^---\s*\n(.*?)\n---", txt, re.DOTALL)
+              if not m:
+                  continue
+              if re.search(r"^publish:\s*true\s*$", m.group(1), re.MULTILINE):
+                  published += 1
+
+          now = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S")
+          lines = [
+              title,
+              f"仓库：{repo}",
+              f"提交：{sha}",
+              f"时间：{now} (UTC+8)",
+              f"已发布笔记：{published} 篇",
+              f"详情：{run_url}",
+          ]
+          if leaks:
+              lines.append("")
+              lines.append(f"密钥扫描发现 {len(leaks)} 处泄漏：")
+              for lk in leaks[:5]:
+                  lines.append(f"  • {lk.get('File', '?')}  [{lk.get('RuleID', '?')}]")
+              if len(leaks) > 5:
+                  lines.append(f"  • ...其余 {len(leaks) - 5} 处省略")
+          text = "\n".join(lines)
+
+          payload = {"msg_type": "text", "content": {"text": text}}
+
+          secret = os.environ.get("SECRET", "")
+          if secret:
+              ts = str(int(time.time()))
+              string_to_sign = f"{ts}\n{secret}".encode("utf-8")
+              sign = base64.b64encode(
+                  hmac.new(string_to_sign, digestmod=hashlib.sha256).digest()
+              ).decode()
+              payload["timestamp"] = ts
+              payload["sign"] = sign
+
+          webhook = os.environ.get("WEBHOOK", "")
+          if not webhook:
+              print("FEISHU_WEBHOOK 未配置，跳过通知")
+              raise SystemExit(0)
+
+          data = json.dumps(payload).encode("utf-8")
+          req = urllib.request.Request(
+              webhook, data=data, headers={"Content-Type": "application/json"}
+          )
+          try:
+              resp = urllib.request.urlopen(req, timeout=15)
+              print("notify status:", resp.status)
+          except Exception as e:
+              print("notify failed:", e)
+          PY
