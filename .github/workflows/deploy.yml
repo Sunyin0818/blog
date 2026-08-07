@@ -63,7 +63,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy public --project-name=${{ vars.CLOUDFLARE_PROJECT_NAME }} --branch=main --commit-dirty=true
+          command: pages deploy public --project-name=${{ vars.CLOUDFLARE_PROJECT_NAME }} --commit-dirty=true
 
   notify:
     needs: [guard, build-and-deploy]
