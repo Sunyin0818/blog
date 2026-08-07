@@ -1,5 +1,6 @@
 ---
 title: OKX连接V2EX账户指南
+slug: okx-lian-jie-v2ex-zhang-hu-zhi-nan
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true
