@@ -1,5 +1,6 @@
 ---
 title: solana cli 转出所有余额
+slug: solana-cli-zhuan-chu-suo-you-yu-e
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true
