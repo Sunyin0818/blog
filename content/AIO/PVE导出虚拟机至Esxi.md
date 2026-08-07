@@ -19,11 +19,11 @@ tags:
 
 先对要导出的虚拟机备份
 
-![](/images/image-af7037ad-a0d8-484e-b786-9a4572596f7d.jpg)
+![](/Assets/image-af7037ad-a0d8-484e-b786-9a4572596f7d.jpg)
 
 模式选择`停止`
 
-![](/images/image-3f430a81-9eb6-4c4c-bcf4-0e52d151f72e.jpg)
+![](/Assets/image-3f430a81-9eb6-4c4c-bcf4-0e52d151f72e.jpg)
 
 ## 1.2. 转换为vmdk
 

@@ -144,7 +144,7 @@ fwupdmgr update
 
 开启了 Tun 模式后，会影响系统的网络连通性检测，表现为
 
-![](/images/image-2bd6cd78-5097-4339-a2ea-5ac77aef491a.webp)
+![](/Assets/image-2bd6cd78-5097-4339-a2ea-5ac77aef491a.webp)
 
 不影响使用，但是看着很难受，所以把网络连通性检测关闭
 
@@ -167,7 +167,7 @@ sudo systemctl restart NetworkManager
 
 现在舒服多了
 
-![](/images/image-206a7187-dab4-49fe-b4b2-66f27a540dd6.webp)
+![](/Assets/image-206a7187-dab4-49fe-b4b2-66f27a540dd6.webp)
 
 ## 2. 美化调整
 
@@ -177,7 +177,7 @@ sudo systemctl restart NetworkManager
 sudo dnf install gnome-extensions-app gnome-tweaks
 ```
 
-![](/images/image-be75faf4-37a9-465c-b569-31d571cf20e8.jpg)
+![](/Assets/image-be75faf4-37a9-465c-b569-31d571cf20e8.jpg)
 
 
 ### 2.2. 安装字体
