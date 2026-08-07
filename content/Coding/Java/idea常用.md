@@ -1,5 +1,6 @@
 ---
 title: idea常用
+slug: idea-chang-yong
 date: 2026-03-25 18:12:12
 lastmod: 2026-04-20 14:18:32
 publish: true

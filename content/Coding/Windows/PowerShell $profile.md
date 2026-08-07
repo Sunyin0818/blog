@@ -1,5 +1,6 @@
 ---
 title: PowerShell $profile
+slug: powershell-profile
 date: 2026-03-25 18:12:12
 lastmod: 2026-04-19 22:22:01
 publish: true

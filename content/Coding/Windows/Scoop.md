@@ -1,5 +1,6 @@
 ---
 title: Scoop
+slug: scoop
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true

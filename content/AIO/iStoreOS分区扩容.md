@@ -1,5 +1,6 @@
 ---
 title: iStoreOS分区扩容
+slug: istoreos-fen-qu-kuo-rong
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true

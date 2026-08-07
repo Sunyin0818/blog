@@ -1,5 +1,6 @@
 ---
 title: PVE导出虚拟机至Esxi
+slug: pve-dao-chu-xu-ni-ji-zhi-esxi
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true

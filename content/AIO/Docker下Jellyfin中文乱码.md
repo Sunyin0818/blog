@@ -1,5 +1,6 @@
 ---
 title: Docker下Jellyfin中文乱码
+slug: docker-xia-jellyfin-zhong-wen-luan-ma
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true

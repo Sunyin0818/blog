@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 
 CONTENT = "content"
 SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-SPECIAL_PAGES = {"search.md", "archives.md", "about.md"}
+SPECIAL_PAGES = {"search.md", "about.md"}
 
 
 def parse_frontmatter(text):
@@ -105,6 +105,12 @@ def main():
         pub = fm.get("publish")
         if pub in (False, "false", "False"):
             errors.append(f"{rel}: 存在 publish: false（应已发布或不应出现）")
+        # 发布笔记必须有 slug：生成稳定 ASCII URL，避免依赖中文文件名，
+        # 也防止后续改标题导致 URL 漂移。未发布笔记仍允许不写 slug。
+        if pub in (True, "true", "True") and not (
+            slug and isinstance(slug, str) and (slug or "").strip()
+        ):
+            errors.append(f"{rel}: publish:true 必须有 slug（用于生成稳定 ASCII URL）")
         if "categories" in fm:
             errors.append(f"{rel}: 手写 categories（应由 _index.md 的 cascade 注入）")
 

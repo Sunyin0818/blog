@@ -1,5 +1,6 @@
 ---
 title: fedora
+slug: fedora
 date: 2026-04-08 10:10:28
 lastmod: 2026-06-15 16:49:06
 publish: true

@@ -1,5 +1,6 @@
 ---
 title: Win11 LTSC 2024 侧边栏OneDrive
+slug: win11-ltsc-2024-ce-bian-lan-onedrive
 date: 2026-03-25 18:12:12
 lastmod: 2026-03-25 18:12:12
 publish: true
