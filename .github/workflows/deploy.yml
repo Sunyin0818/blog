@@ -1,0 +1,112 @@
+name: build-deploy-notify
+
+# 触发：push 到 main（即 Enveloppe 合入笔记后的构建发布），或手动触发
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 只需要读仓库；部署用 Cloudflare token，不写仓库
+permissions:
+  contents: read
+
+# 同一次推送只跑一个部署，避免并发
+concurrency:
+  group: cloudflare-pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go (Hugo Modules 需要)
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Setup Hugo (extended)
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.164.0"
+          extended: true
+
+      - name: Fetch Hugo modules (PaperMod)
+        env:
+          GIT_TERMINAL_PROMPT: "0"
+        run: hugo mod get -u ./...
+
+      - name: Prepare section indexes
+        run: python3 .ci/gen-index.py
+
+      - name: Build
+        run: hugo --gc --minify
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=${{ vars.CLOUDFLARE_PROJECT_NAME }} --branch=main --commit-dirty=true
+
+  notify:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: always()   # 成功或失败都通知
+    env:
+      STATUS: ${{ needs.build-and-deploy.result }}
+      PROJECT: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+      WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+      SECRET: ${{ secrets.FEISHU_SECRET }}
+    steps:
+      - name: Send Feishu notification
+        run: |
+          python3 - <<'PY'
+          import os, json, time, hmac, hashlib, base64, urllib.request
+
+          status = os.environ.get("STATUS", "")
+          ok = status == "success"
+          repo = os.environ.get("GITHUB_REPOSITORY", "")
+          sha = os.environ.get("GITHUB_SHA", "")[:7]
+          run_url = os.environ.get("GITHUB_SERVER_URL", "") + "/" + repo + "/actions/runs/" + os.environ.get("GITHUB_RUN_ID", "")
+          # 自定义域已在 hugo.yaml 配置
+          site = "https://blog.sunyin.fun/"
+          title = "✅ 博客构建部署成功" if ok else "❌ 博客构建部署失败"
+          text = "\n".join([
+              title,
+              f"仓库：{repo}",
+              f"提交：{sha}",
+              f"站点：{site}",
+              f"详情：{run_url}",
+          ])
+
+          payload = {"msg_type": "text", "content": {"text": text}}
+
+          # 飞书自定义机器人签名校验（仅当启用了签名时填 FEISHU_SECRET）
+          secret = os.environ.get("SECRET", "")
+          if secret:
+              ts = str(int(time.time()))
+              string_to_sign = f"{ts}\n{secret}".encode("utf-8")
+              sign = base64.b64encode(
+                  hmac.new(string_to_sign, digestmod=hashlib.sha256).digest()
+              ).decode()
+              payload["timestamp"] = ts
+              payload["sign"] = sign
+
+          webhook = os.environ.get("WEBHOOK", "")
+          if not webhook:
+              print("FEISHU_WEBHOOK 未配置，跳过通知")
+              raise SystemExit(0)
+
+          data = json.dumps(payload).encode("utf-8")
+          req = urllib.request.Request(
+              webhook, data=data, headers={"Content-Type": "application/json"}
+          )
+          try:
+              resp = urllib.request.urlopen(req, timeout=15)
+              print("notify status:", resp.status)
+          except Exception as e:
+              print("notify failed:", e)
+          PY
