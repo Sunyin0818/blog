@@ -1,15 +1,18 @@
 {{- define "main" }}
 
+{{- /* 取数：所有「隶属于某个内容分区」的笔记。
+       用 Section != "" 而非 mainSections 白名单，好处是新增内容分区（如 Crypto）
+       无需改任何配置就会自动收录 —— 真正零维护。
+       站点自建页（notes/about/search，位于 content 根、Section 为空）天然被排除。 */ -}}
+{{- $pages := where site.RegularPages "Section" "!=" "" }}
+
 <header class="page-header">
     <h1>全部笔记</h1>
     <div class="post-description">
-        {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
-        {{- $n := len $pages }}
-        共 {{ $n }} 篇
+        共 {{ len $pages }} 篇
     </div>
 </header>
 
-{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
 {{- $rawGroups := $pages.GroupByDate "2006-01" }}
 {{- /* 物化（realize）：GroupByDate 返回惰性 PageGroups，第一个 range 会按升序"实现"它，
        导致第二次 range 的 .Reverse 才真正反转、两次顺序不一致。先 append 进普通 slice，

@@ -10,6 +10,16 @@ buildFuture: false
 module:
   imports:
     - path: github.com/adityatelange/hugo-PaperMod
+  # ★ 站点自建页（全部笔记 / 关于…）放在 content/ 之外的 site-pages/，再挂载进 content。
+  #   原因：Obsidian Enveloppe 的 autoclean 只清理仓库的 content/ 目录，
+  #   放这里就永远不会被误删 —— autoclean 可以保持全开（Actions 偶发失败时仍能自愈）。
+  #   注意：一旦声明 mounts，只有 content 这个 target 的默认挂载被覆盖，
+  #   static/layouts/assets/i18n 等仍走默认，无需重复声明。
+  mounts:
+    - source: content
+      target: content
+    - source: site-pages
+      target: content
 
 taxonomies:
   tag: tags
@@ -57,6 +67,7 @@ params:
     - coding
     - linux
     - misc
+    - crypto
   DateFormat: "2006-01-02"
   defaultTheme: auto
   ShowReadingTime: true

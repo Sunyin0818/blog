@@ -118,13 +118,12 @@ def main():
         if len(files) > 1:
             errors.append(f"slug 重复 {slug}: {', '.join(files)}")
 
-    # 每个含 .md 的内容目录都必须有 _index.md，否则 cascade 失效、分类页塌
-    dirs_with_md = {os.path.dirname(p) for p in md_files}
-    for d in dirs_with_md:
-        if d == CONTENT:
-            continue
-        if not os.path.exists(os.path.join(d, "_index.md")):
-            errors.append(f"目录缺少 _index.md（cascade 失效）: {os.path.relpath(d, CONTENT)}/")
+    # 注：曾要求「每个含 .md 的目录都必须有 _index.md」，理由是 cascade 注入 categories。
+    # 但 categories 分类法已整体废弃（hugo.yaml 的 taxonomies 只保留 tag，/categories/ 不再生成），
+    # 该前提不复存在。缺 _index.md 时 Hugo 仍会自动生成分区列表页（标题取目录名），
+    # 「全部笔记」页也已改为按 Section 自动收录，不依赖任何白名单。
+    # 因此不再强制 —— 新增内容分区无需在 blog 仓库手工建文件。
+    # _index.md 现在纯属可选增强：想给分区起中文名时才加（见 site-pages/ 说明）。
 
     if errors:
         print(f"::error:: check_frontmatter 发现 {len(errors)} 处问题:")

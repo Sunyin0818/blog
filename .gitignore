@@ -10,6 +10,7 @@ _buildtest/
 _preview_build/
 verify_build/
 _scratch_*/
+_mount_test*/
 
 # gitleaks 扫描产物（本地验证用，不入库）
 results*.sarif
